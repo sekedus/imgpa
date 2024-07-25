@@ -1,0 +1,40 @@
+{
+  "name": "imgpa",
+  "version": "1.0.0",
+  "description": "An API to resize, change formats, and adjust image quality with ease.",
+  "homepage": "https://github.com/sekedus/imgpa#readme",
+  "license": "GPL-3.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "imgpa",
+    "sharp",
+    "vercel",
+    "image",
+    "optimize",
+    "optimization",
+    "compression",
+    "processing",
+    "manipulation",
+    "api"
+  ],
+  "author": {
+    "name": "Sekedus",
+    "url": "https://github.com/sekedus"
+  },
+  "bugs": {
+    "url": "https://github.com/sekedus/imgpa/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sekedus/imgpa.git"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "sharp": "^0.33.4",
+    "referrer-policy": "^1.2.0"
+  }
+}
