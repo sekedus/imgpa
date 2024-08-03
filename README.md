@@ -1,6 +1,6 @@
 # IMGPA
 
-[![GitHub repo size](https://img.shields.io/github/repo-size/sekedus/imgpa?label=Size)](https://github.com/sekedus/imgpa) [![GitHub License](https://img.shields.io/github/license/sekedus/imgpa?label=License)](https://github.com/sekedus/imgpa/blob/main/LICENSE)
+[![GitHub repo size](https://img.shields.io/github/repo-size/sekedus/imgpa?label=Size)](https://github.com/sekedus/imgpa) [![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://gist.githubusercontent.com/sekedus/632700068f917889cd3d45a2b354a7e5/raw/clone.json&logo=github)](https://github.com/MShawon/github-clone-count-badge) [![GitHub License](https://img.shields.io/github/license/sekedus/imgpa?label=License)](https://github.com/sekedus/imgpa/blob/main/LICENSE)
 
 IMGPA (Image Processing API) provides an API for image manipulation using [sharp](https://github.com/lovell/sharp). The API allows you to resize images, change formats, and adjust quality.
 
