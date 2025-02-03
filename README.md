@@ -75,8 +75,8 @@ Endpoint: `/imgpa`
 
 ### Example Request
 
-```http
-GET http://localhost:3000/imgpa?url=https://example.com/image.jpg&w=340&h=226&fit=contain&quality=80&format=webp&filename=new-image
+```
+http://localhost:3000/imgpa?url=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2160px-Google_2015_logo.svg.png&w=340&h=226&fit=contain&quality=80&format=webp&filename=new-image
 ```
 
 ### Supported Image Formats

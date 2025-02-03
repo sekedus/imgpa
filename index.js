@@ -13,10 +13,19 @@ const supportedFormats = ['jpeg', 'png', 'webp', 'gif', 'tiff', 'avif'];
 app.use(referrerPolicy({ policy: 'no-referrer' }));
 
 app.get('/imgpa', async (req, res) => {
-    const { url, w, h, fit, q, format, filename } = req.query;
+    let { url, w, h, fit, q, format, filename } = req.query;
 
     if (!url) {
         return res.status(400).send('Missing required parameter: {url}');
+    }
+
+    if (/^https?:\/[^/]/i.test(url)) {
+        return res.status(400).send('Invalid URL: Two slashes are needed after http(s):, e.g. "http://example.com".');
+    }
+
+    // Ensure the URL starts with http:// or https://
+    if (!/^https?:\/\//i.test(url)) {
+      url = `https://${url}`;
     }
 
     try {
