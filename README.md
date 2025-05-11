@@ -60,15 +60,16 @@ Endpoint: `/imgpa`
 
 ### Query Parameters
 
-| Name      | Parameter | Description                                        | Info           |
-|-----------|-----------|----------------------------------------------------|----------------|
-| URL       | `url`     | The URL of the image to manipulate (required).     |                |
-| Width     | `w`       | Sets the width of the output image, in pixels.     |                |
-| Height    | `h`       | Sets the height of the output image, in pixels.    |                |
-| Fit       | `fit`     | Sets how to fit the image to its given dimensions. | [info][fit]    |
-| Quality   | `q`       | Defines the quality of the output image (1-100).   |                |
-| Format    | `format`  | Encodes the output image to a specific format.     | [info][format] |
-| Filename  | `filename`| The name to save the output image as.              |                |
+| Name      | Parameter   | Description                                        | Info           |
+|-----------|-------------|----------------------------------------------------|----------------|
+| URL       | `url`       | The URL of the image to manipulate (required).     |                |
+| Width     | `w`         | Sets the width of the output image, in pixels.     |                |
+| Height    | `h`         | Sets the height of the output image, in pixels.    |                |
+| Fit       | `fit`       | Sets how to fit the image to its given dimensions. | [info][fit]    |
+| Quality   | `q`         | Defines the quality of the output image (1-100).   |                |
+| Format    | `format`    | Encodes the output image to a specific format.     | [info][format] |
+| Filename  | `filename`  | The name to save the output image as.              |                |
+| Hide Error| `hide_error`| Allows processing even if image has issues.        |                |
 
 [fit]: https://sharp.pixelplumbing.com/api-resize#resize
 [format]: #supported-image-formats

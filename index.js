@@ -34,7 +34,12 @@ app.get('/imgpa', async (req, res) => {
             responseType: 'arraybuffer',
         });
 
-        let image = sharp(response.data);
+        const sharpOptions = {};
+        if ('hide_error' in req.query) {
+            sharpOptions.failOn = 'none';
+        }
+
+        let image = sharp(response.data, sharpOptions);
         const metadata = await image.metadata();
 
         const imageFormat = format || metadata.format;
@@ -70,7 +75,9 @@ app.get('/imgpa', async (req, res) => {
         res.set('Content-Disposition', `inline; filename="${outputFilename}.${imageFormat}"`);
         res.send(newImage);
     } catch (error) {
-        res.status(500).send(`!! Error processing image: ${error.message}`);
+        const errorMessage1 = `<b>!! ERROR:</b> ${error.message}`;
+        const errorMessage2 = `<b>URL:</b> ${url}`;
+        res.status(500).send(errorMessage1 + '<br/>' + errorMessage2);
     }
 });
 
