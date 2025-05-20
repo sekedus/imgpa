@@ -69,6 +69,7 @@ Endpoint: `/imgpa`
 | Quality   | `q`         | Defines the quality of the output image (1-100).   |                |
 | Format    | `format`    | Encodes the output image to a specific format.     | [info][format] |
 | Filename  | `filename`  | The name to save the output image as.              |                |
+| Referer   | `ref`       | Sets the HTTP Referer header for the request.      |                |
 | Hide Error| `hide_error`| Allows processing even if image has issues.        |                |
 
 [fit]: https://sharp.pixelplumbing.com/api-resize#resize
