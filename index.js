@@ -2,7 +2,6 @@ const express = require('express');
 const sharp = require('sharp');
 const axios = require('axios');
 const path = require('path');
-const referrerPolicy = require('referrer-policy');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,10 +9,8 @@ const PORT = process.env.PORT || 3000;
 const supportedFits = ['cover', 'contain', 'fill', 'inside', 'outside'];
 const supportedFormats = ['jpeg', 'png', 'webp', 'gif', 'tiff', 'avif'];
 
-app.use(referrerPolicy({ policy: 'no-referrer' }));
-
 app.get('/imgpa', async (req, res) => {
-    let { url, w, h, fit, q, format, filename } = req.query;
+    let { url, w, h, fit, q, format, filename, ref } = req.query;
 
     if (!url) {
         return res.status(400).send('Missing required parameter: {url}');
@@ -29,10 +26,16 @@ app.get('/imgpa', async (req, res) => {
     }
 
     try {
-        const response = await axios({
+        const axiosConfig = {
             url,
             responseType: 'arraybuffer',
-        });
+        };
+        if (ref) {
+            axiosConfig.headers = {
+                Referer: ref,
+            };
+        }
+        const response = await axios(axiosConfig);
 
         const sharpOptions = {};
         if ('hide_error' in req.query) {

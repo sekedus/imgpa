@@ -1,6 +1,6 @@
 {
   "name": "imgpa",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An API to resize, change formats, and adjust image quality with ease.",
   "homepage": "https://github.com/sekedus/imgpa#readme",
   "license": "GPL-3.0",
@@ -34,7 +34,6 @@
   "dependencies": {
     "axios": "^1.7.2",
     "express": "^4.19.2",
-    "sharp": "^0.33.4",
-    "referrer-policy": "^1.2.0"
+    "sharp": "^0.33.4"
   }
 }
