@@ -17,7 +17,10 @@ app.get('/imgpa', async (req, res) => {
     }
 
     if (/^https?:\/[^/]/i.test(url)) {
-        return res.status(400).send('Invalid URL: Two slashes are needed after http(s):, e.g. "http://example.com".');
+        // return res.status(400).send(`Invalid URL: "<b>${url}</b>". Two slashes are needed after http(s):, e.g. "<b>https://example.com</b>".`);
+        url = url.replace(/^https?:\/([^/])/, (m, p1) => {
+            return m.startsWith('https') ? `https://${p1}` : `http://${p1}`;
+        });
     }
 
     // Ensure the URL starts with http:// or https://
