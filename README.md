@@ -71,9 +71,12 @@ Endpoint: `/imgpa`
 | Filename  | `filename`  | The name to save the output image as.              |                |
 | Referer   | `ref`       | Sets the HTTP Referer header for the request.      |                |
 | Hide Error| `hide_error`| Allows processing even if image has issues.        |                |
+| Proxy     | `proxy`     | Base URL of a proxy to use if direct access to the image URL is not possible. | |
 
 [fit]: https://sharp.pixelplumbing.com/api-resize#resize
 [format]: #supported-image-formats
+
+**Note:** Proxy support uses [cf-proxy-ex](https://github.com/1234567Yang/cf-proxy-ex). You can create your own proxy through a Cloudflare Worker.
 
 ### Example Request
 
