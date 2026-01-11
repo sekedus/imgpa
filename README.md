@@ -70,8 +70,8 @@ Endpoint: `/imgpa`
 | Format    | `format`    | Encodes the output image to a specific format.     | [info][format] |
 | Filename  | `filename`  | The name to save the output image as.              |                |
 | Referer   | `ref`       | Sets the HTTP Referer header for the request.      |                |
-| Hide Error| `hide_error`| Allows processing even if image has issues.        |                |
 | Proxy     | `proxy`     | Base URL of a proxy to use if direct access to the image URL is not possible. | |
+| Hide Error| `hide_error` or `he` | Allows processing even if image has issues. | |
 
 [fit]: https://sharp.pixelplumbing.com/api-resize#resize
 [format]: #supported-image-formats
@@ -86,12 +86,17 @@ http://localhost:3000/imgpa?url=https://upload.wikimedia.org/wikipedia/commons/t
 
 ### Supported Image Formats
 
+<!-- https://github.com/lovell/sharp/blob/v0.33.4/docs/README.md#formats -->
+
 - jpeg
 - png
 - webp
 - gif
-- tiff
 - avif
+- tiff
+- svg
+
+For more details, see the [sharp documentation on supported formats](https://sharp.pixelplumbing.com/#formats).
 
 ㅤ
 ## Deployment

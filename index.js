@@ -7,7 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const supportedFits = ['cover', 'contain', 'fill', 'inside', 'outside'];
-const supportedFormats = ['jpeg', 'png', 'webp', 'gif', 'tiff', 'avif'];
+const supportedFormats = ['jpeg', 'png', 'webp', 'gif', 'avif', 'tiff', 'svg']
+    .filter(fmt => Object.keys(sharp.format).includes(fmt)); // https://sharp.pixelplumbing.com/#formats
 
 function checkProxyBase(base) {
     if (!base) {
@@ -30,15 +31,50 @@ function checkProxyBase(base) {
     return base;
 }
 
+function getImageFormat({ format, url, response }) {
+    if (format && typeof format === 'string') {
+        return format.toLowerCase();
+    }
+
+    try {
+        // Extension normalization map
+        const extMap = {
+            jpg: 'jpeg',
+            tif: 'tiff'
+        };
+        const urlObj = new URL(url);
+        let ext = path.extname(urlObj.pathname).replace('.', '').toLowerCase();
+        if (ext) {
+            return extMap[ext] || ext;
+        }
+    } catch (e) {
+        // Ignore URL parse errors
+    }
+
+    const contentType = response?.headers?.['content-type'];
+    if (contentType) {
+        const type = contentType.split(';')[0].trim().split('/')[1];
+        if (type) return type.toLowerCase();
+    }
+
+    return null;
+}
+
+function showError(message, url) {
+    const errorMessage1 = `<b>!! ERROR:</b> ${message}`;
+    const errorMessage2 = `<b>URL:</b> ${url}`;
+    return errorMessage1 + '<br/>' + errorMessage2;
+}
+
 app.get('/imgpa', async (req, res) => {
     let { url, w, h, fit, q, format, filename, ref, proxy } = req.query;
 
     if (!url) {
-        return res.status(400).send('Missing required parameter: {url}');
+        return res.status(400).send(showError('Missing required parameter: <u>{url}</u>', url));
     }
 
     if (/^https?:\/[^/]/i.test(url)) {
-        // return res.status(400).send(`Invalid URL: "<b>${url}</b>". Two slashes are needed after http(s):, e.g. "<b>https://example.com</b>".`);
+        // return res.status(400).send(showError(`Invalid URL, two slashes are needed after http(s):, e.g. "<b>https://example.com</b>".`, url));
         url = url.replace(/^https?:\/([^/])/, (m, p1) => {
             return m.startsWith('https') ? `https://${p1}` : `http://${p1}`;
         });
@@ -82,18 +118,17 @@ app.get('/imgpa', async (req, res) => {
             }
         }
 
+        const imageFormat = getImageFormat({ format, url, response });
+        if (!imageFormat || !supportedFormats.includes(imageFormat)) {
+            return res.status(400).send(showError(`Unsupported image format: <u>${imageFormat}</u>. The formats supported by this server are: <u>${supportedFormats.join(', ')}</u>`, url));
+        }
+
         const sharpOptions = {};
-        if ('hide_error' in req.query) {
+        if ('hide_error' in req.query || 'he' in req.query) {
             sharpOptions.failOn = 'none';
         }
 
         let image = sharp(response.data, sharpOptions);
-        const metadata = await image.metadata();
-
-        const imageFormat = format || metadata.format;
-        if (!supportedFormats.includes(imageFormat)) {
-            return res.status(400).send(`Unsupported image format: ${imageFormat}`);
-        }
 
         const resizeOptions = {
             width: w ? parseInt(w) : null,
@@ -124,9 +159,7 @@ app.get('/imgpa', async (req, res) => {
         res.send(newImage);
     } catch (error) {
         // console.log(error);
-        const errorMessage1 = `<b>!! ERROR:</b> ${error.message}`;
-        const errorMessage2 = `<b>URL:</b> ${url}`;
-        res.status(500).send(errorMessage1 + '<br/>' + errorMessage2);
+        res.status(500).send(showError(error.message, url));
     }
 });
 
